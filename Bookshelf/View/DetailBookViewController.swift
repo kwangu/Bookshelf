@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailBookViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

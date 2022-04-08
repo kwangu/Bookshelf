@@ -25,7 +25,7 @@ class SearchViewController: UIViewController {
     }
 
     @objc private func showDetailView() {
-        let detailView = DetailViewController()
+        let detailView = DetailBookViewController()
         self.navigationController?.pushViewController(detailView, animated: true)
     }
 }
