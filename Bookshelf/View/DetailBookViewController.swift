@@ -110,10 +110,18 @@ class DetailBookViewController: UIViewController {
         desc.numberOfLines = 0
         desc.text = "desc : \(detailBook?.desc ?? "")"
 
-        let url = UILabel()
+        let url = UITextView()
         scrollView.addSubview(url)
-        url.numberOfLines = 0
         url.text = detailBook?.url
+        url.isEditable = false
+        url.isScrollEnabled = false
+        url.dataDetectorTypes = .link
+        url.isUserInteractionEnabled = true
+
+        let note = UITextView()
+        scrollView.addSubview(note)
+        note.layer.borderWidth = 1.0
+        note.layer.borderColor = UIColor.systemGray.cgColor
 
         title.anchor(top: detailImage.bottomAnchor, right: view.trailingAnchor, bottom: nil, left: view.leadingAnchor,
                      padding: .init(top: 0, left: 16, bottom: 0, right: 16))
@@ -148,8 +156,11 @@ class DetailBookViewController: UIViewController {
         desc.anchor(top: rating.bottomAnchor, right: view.trailingAnchor, bottom: nil, left: view.leadingAnchor,
                      padding: .init(top: 15, left: 16, bottom: 0, right: 16))
 
-        url.anchor(top: desc.bottomAnchor, right: view.trailingAnchor, bottom: scrollView.bottomAnchor, left: view.leadingAnchor,
+        url.anchor(top: desc.bottomAnchor, right: view.trailingAnchor, bottom: nil, left: view.leadingAnchor,
                      padding: .init(top: 15, left: 16, bottom: 0, right: 16))
+
+        note.anchor(top: url.bottomAnchor, right: view.trailingAnchor, bottom: scrollView.bottomAnchor, left: view.leadingAnchor,
+                    padding: .init(top: 15, left: 16, bottom: 0, right: 16), size: .init(width: 0, height: 100))
 
     }
 }
