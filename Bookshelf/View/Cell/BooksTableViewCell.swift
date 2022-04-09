@@ -10,23 +10,13 @@ import UIKit
 
 class BooksTableViewCell: UITableViewCell {
 
-    var img: UIImageView = {
-        let imgView = UIImageView()
-        imgView.image = UIImage(named: "icon")
-        return imgView
-    }()
+    var img = UIImageView()
+    var title = UILabel()
 
-    var title: UILabel = {
-       let label = UILabel()
-        label.text = "book"
-        label.textColor = UIColor.black
-        return label
-    }()
-
-//    override func prepareForReuse() {
-//        self.title.text = ""
-//        self.img.image = nil
-//    }
+    override func prepareForReuse() {
+        self.title.text = ""
+        self.img.image = nil
+    }
 
     private func setConstraint() {
         contentView.addSubview(img)

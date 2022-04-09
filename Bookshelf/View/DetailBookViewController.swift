@@ -116,6 +116,11 @@ class DetailBookViewController: UIViewController {
         desc.numberOfLines = 0
         desc.text = "desc : \(detailBook?.desc ?? "")"
 
+        let price = UILabel()
+        scrollView.addSubview(price)
+        price.numberOfLines = 0
+        price.text = "price : \(detailBook?.price ?? "")"
+
         let url = UITextView()
         scrollView.addSubview(url)
         url.text = detailBook?.url
@@ -179,7 +184,10 @@ class DetailBookViewController: UIViewController {
         desc.anchor(top: rating.bottomAnchor, right: view.trailingAnchor, bottom: nil, left: view.leadingAnchor,
                      padding: .init(top: 15, left: 16, bottom: 0, right: 16))
 
-        url.anchor(top: desc.bottomAnchor, right: view.trailingAnchor, bottom: nil, left: view.leadingAnchor,
+        price.anchor(top: desc.bottomAnchor, right: view.trailingAnchor, bottom: nil, left: view.leadingAnchor,
+                     padding: .init(top: 15, left: 16, bottom: 0, right: 16))
+
+        url.anchor(top: price.bottomAnchor, right: view.trailingAnchor, bottom: nil, left: view.leadingAnchor,
                      padding: .init(top: 15, left: 16, bottom: 0, right: 16))
 
         noteView.anchor(top: url.bottomAnchor, right: saveButton.leadingAnchor, bottom: nil, left: view.leadingAnchor,

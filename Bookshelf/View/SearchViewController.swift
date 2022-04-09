@@ -55,13 +55,6 @@ class SearchViewController: UIViewController {
         searchButton.anchor(top: searchBar.topAnchor, right: view.trailingAnchor, bottom: nil, left: searchBar.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 16), size: .init(width: 70, height: 50))
 
         tableView.anchor(top: searchBar.bottomAnchor, right: view.trailingAnchor, bottom: view.bottomAnchor, left: view.leadingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-
-        // test용
-        searchBar.text = "swift"
-        self.firstSearchBooks()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-            self.showDetailView(book: self.books[0])
-        })
     }
 
     @objc private func firstSearchBooks() {
