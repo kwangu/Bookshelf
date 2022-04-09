@@ -7,13 +7,37 @@
 
 import Foundation
 
+struct Books: Codable {
+    var error: String
+    var total: String
+    var page: String
+    var books: [Book]
+
+    init(error: String, total: String, page: String, books: [Book]) {
+        self.error = error
+        self.total = total
+        self.page = page
+        self.books = books
+    }
+}
+
 struct Book: Codable {
     var title: String
-    var subTitle: String
+    var subtitle: String
     var isbn13: String
     var price: String
-    var imagePath: String
+    var image: String
     var url: String
+
+    init(title: String, subtitle: String, isbn13: String,
+         price: String, image: String, url: String) {
+        self.title = title
+        self.subtitle = subtitle
+        self.isbn13 = isbn13
+        self.price = price
+        self.image = image
+        self.url = url
+    }
 }
 
 // "error": "0",

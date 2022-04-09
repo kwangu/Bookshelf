@@ -22,6 +22,18 @@
 		3E30675628002FA300C69875 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E30675528002FA300C69875 /* Book.swift */; };
 		3E30675728002FA300C69875 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E30675528002FA300C69875 /* Book.swift */; };
 		3E30675828002FA300C69875 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E30675528002FA300C69875 /* Book.swift */; };
+		D477B11C28004ECA001A3384 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477B11B28004ECA001A3384 /* Network.swift */; };
+		D477B11D28004ECA001A3384 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477B11B28004ECA001A3384 /* Network.swift */; };
+		D477B11E28004ECA001A3384 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477B11B28004ECA001A3384 /* Network.swift */; };
+		D477B12528006742001A3384 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477B12428006742001A3384 /* UIView+Extension.swift */; };
+		D477B12628006742001A3384 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477B12428006742001A3384 /* UIView+Extension.swift */; };
+		D477B12728006742001A3384 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477B12428006742001A3384 /* UIView+Extension.swift */; };
+		D477B129280071D9001A3384 /* BooksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477B128280071D9001A3384 /* BooksTableViewCell.swift */; };
+		D477B12A280071D9001A3384 /* BooksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477B128280071D9001A3384 /* BooksTableViewCell.swift */; };
+		D477B12B280071D9001A3384 /* BooksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477B128280071D9001A3384 /* BooksTableViewCell.swift */; };
+		D477B13428011AF3001A3384 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477B13328011AF3001A3384 /* ImageLoader.swift */; };
+		D477B13528011AF3001A3384 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477B13328011AF3001A3384 /* ImageLoader.swift */; };
+		D477B13628011AF3001A3384 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477B13328011AF3001A3384 /* ImageLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +67,10 @@
 		3E30674D2800287B00C69875 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		3E3067512800288800C69875 /* DetailBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBookViewController.swift; sourceTree = "<group>"; };
 		3E30675528002FA300C69875 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
+		D477B11B28004ECA001A3384 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		D477B12428006742001A3384 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		D477B128280071D9001A3384 /* BooksTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksTableViewCell.swift; sourceTree = "<group>"; };
+		D477B13328011AF3001A3384 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +121,9 @@
 		3E30670B27FFFA0600C69875 /* Bookshelf */ = {
 			isa = PBXGroup;
 			children = (
+				D477B13228011AEB001A3384 /* Image */,
+				D477B12328006731001A3384 /* Extension */,
+				D477B11A28004EA6001A3384 /* Network */,
 				3E30675A2800310000C69875 /* View */,
 				3E306759280030EA00C69875 /* Model */,
 				3E30670C27FFFA0600C69875 /* AppDelegate.swift */,
@@ -143,10 +162,43 @@
 		3E30675A2800310000C69875 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D477B12D280108B2001A3384 /* Cell */,
 				3E30674D2800287B00C69875 /* SearchViewController.swift */,
 				3E3067512800288800C69875 /* DetailBookViewController.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		D477B11A28004EA6001A3384 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				D477B11B28004ECA001A3384 /* Network.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		D477B12328006731001A3384 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				D477B12428006742001A3384 /* UIView+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		D477B12D280108B2001A3384 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				D477B128280071D9001A3384 /* BooksTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		D477B13228011AEB001A3384 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				D477B13328011AF3001A3384 /* ImageLoader.swift */,
+			);
+			path = Image;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -301,9 +353,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D477B12528006742001A3384 /* UIView+Extension.swift in Sources */,
+				D477B11C28004ECA001A3384 /* Network.swift in Sources */,
 				3E30675628002FA300C69875 /* Book.swift in Sources */,
 				3E30674E2800287B00C69875 /* SearchViewController.swift in Sources */,
+				D477B129280071D9001A3384 /* BooksTableViewCell.swift in Sources */,
 				3E30670D27FFFA0600C69875 /* AppDelegate.swift in Sources */,
+				D477B13428011AF3001A3384 /* ImageLoader.swift in Sources */,
 				3E3067522800288800C69875 /* DetailBookViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -312,9 +368,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D477B12628006742001A3384 /* UIView+Extension.swift in Sources */,
+				D477B11D28004ECA001A3384 /* Network.swift in Sources */,
 				3E30675728002FA300C69875 /* Book.swift in Sources */,
 				3E3067532800288800C69875 /* DetailBookViewController.swift in Sources */,
+				D477B12A280071D9001A3384 /* BooksTableViewCell.swift in Sources */,
 				3E30674F2800287B00C69875 /* SearchViewController.swift in Sources */,
+				D477B13528011AF3001A3384 /* ImageLoader.swift in Sources */,
 				3E30672427FFFA0800C69875 /* BookshelfTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -323,8 +383,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D477B12B280071D9001A3384 /* BooksTableViewCell.swift in Sources */,
 				3E3067502800287B00C69875 /* SearchViewController.swift in Sources */,
+				D477B12728006742001A3384 /* UIView+Extension.swift in Sources */,
 				3E30673027FFFA0800C69875 /* BookshelfUITestsLaunchTests.swift in Sources */,
+				D477B11E28004ECA001A3384 /* Network.swift in Sources */,
+				D477B13628011AF3001A3384 /* ImageLoader.swift in Sources */,
 				3E30672E27FFFA0800C69875 /* BookshelfUITests.swift in Sources */,
 				3E30675828002FA300C69875 /* Book.swift in Sources */,
 				3E3067542800288800C69875 /* DetailBookViewController.swift in Sources */,

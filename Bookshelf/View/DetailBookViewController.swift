@@ -13,6 +13,12 @@ class DetailBookViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = .systemBlue
+        setupUI()
+    }
+
+    func setupUI() {
+        self.title = "Detail"
+        self.navigationController?.navigationBar.barTintColor = .white
+        self.view.backgroundColor = .white
     }
 }
