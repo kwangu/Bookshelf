@@ -14,8 +14,8 @@ class SearchViewController: UIViewController {
 
     private var books = [Book]()
     let imageLoader = ImageLoader()
-    var currentPage = 1
-    var totalPage = 0
+    var currentPage = 0
+    var totalPage: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +42,7 @@ class SearchViewController: UIViewController {
         searchButton.setTitle("search", for: .normal)
         searchButton.setTitleColor(.black, for: .normal)
         view.addSubview(searchButton)
-        searchButton.addTarget(self, action: #selector(searchBooks), for: .touchUpInside)
+        searchButton.addTarget(self, action: #selector(firstSearchBooks), for: .touchUpInside)
 
         tableView.separatorColor = .clear
         tableView.delegate = self
@@ -57,12 +57,30 @@ class SearchViewController: UIViewController {
         tableView.anchor(top: searchBar.bottomAnchor, right: view.trailingAnchor, bottom: view.bottomAnchor, left: view.leadingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
     }
 
-    @objc private func searchBooks() {
+    @objc private func firstSearchBooks() {
         self.books.removeAll()
-        self.currentPage = 1
+        self.currentPage = 0
+        self.totalPage = nil
+
+        searchBooks()
+    }
+
+    @objc private func searchBooks() {
+
+        self.currentPage += 1
+
+        if totalPage != nil && self.currentPage > totalPage ?? 0 {
+            return
+        }
 
         Network().getSearchBooks(url: "https://api.itbook.store/1.0/search/\(searchBar.text ?? "")/\(String(currentPage))", completionHandler: { success, books in
             if success {
+
+                if self.totalPage == nil {
+                    let total = Int(books.total) ?? 0
+                    self.totalPage = total % 10 == 0 ? total / 10 : (total / 10)+1
+                }
+
                 books.books.forEach { book in
                     self.books.append(book)
                 }
@@ -83,7 +101,7 @@ class SearchViewController: UIViewController {
     }
 }
 
- extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
+ extension SearchViewController: UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.books.count
@@ -99,7 +117,10 @@ class SearchViewController: UIViewController {
             }
         })
 
+        if indexPath.row == books.count - 10 {
+            self.searchBooks()
+        }
+
         return cell
     }
-
  }
