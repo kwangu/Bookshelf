@@ -7,15 +7,20 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class DetailBookViewController: UIViewController {
     private let imageLoader = ImageLoader()
+    let noteView = UITextView()
 
     var book: Book?
     var detailBook: DetailBook?
+    var container: NSPersistentContainer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        self.container = appDelegate?.persistentContainer
 
         setupUI()
     }
@@ -32,6 +37,7 @@ class DetailBookViewController: UIViewController {
                 print(book)
                 DispatchQueue.main.async {
                     self.setupDetailUI()
+                    self.fetchNote()
                 }
 
             } else {
@@ -118,10 +124,27 @@ class DetailBookViewController: UIViewController {
         url.dataDetectorTypes = .link
         url.isUserInteractionEnabled = true
 
-        let note = UITextView()
-        scrollView.addSubview(note)
-        note.layer.borderWidth = 1.0
-        note.layer.borderColor = UIColor.systemGray.cgColor
+        scrollView.addSubview(noteView)
+        noteView.layer.borderWidth = 1.0
+        noteView.layer.borderColor = UIColor.systemGray.cgColor
+
+        let saveButton = UIButton()
+        saveButton.setTitle("save note", for: .normal)
+        saveButton.setTitleColor(.black, for: .normal)
+        saveButton.titleLabel?.numberOfLines = 0
+        saveButton.layer.borderColor = UIColor.gray.cgColor
+        saveButton.layer.borderWidth = 1.0
+        saveButton.addTarget(self, action: #selector(saveNote), for: .touchUpInside)
+        scrollView.addSubview(saveButton)
+
+        let deleteButton = UIButton()
+        deleteButton.setTitleColor(.black, for: .normal)
+        deleteButton.titleLabel?.numberOfLines = 0
+        deleteButton.layer.borderColor = UIColor.gray.cgColor
+        deleteButton.layer.borderWidth = 1.0
+        deleteButton.setTitle("delete note", for: .normal)
+        deleteButton.addTarget(self, action: #selector(deleteNote), for: .touchUpInside)
+        scrollView.addSubview(deleteButton)
 
         title.anchor(top: detailImage.bottomAnchor, right: view.trailingAnchor, bottom: nil, left: view.leadingAnchor,
                      padding: .init(top: 0, left: 16, bottom: 0, right: 16))
@@ -159,8 +182,79 @@ class DetailBookViewController: UIViewController {
         url.anchor(top: desc.bottomAnchor, right: view.trailingAnchor, bottom: nil, left: view.leadingAnchor,
                      padding: .init(top: 15, left: 16, bottom: 0, right: 16))
 
-        note.anchor(top: url.bottomAnchor, right: view.trailingAnchor, bottom: scrollView.bottomAnchor, left: view.leadingAnchor,
-                    padding: .init(top: 15, left: 16, bottom: 0, right: 16), size: .init(width: 0, height: 100))
+        noteView.anchor(top: url.bottomAnchor, right: saveButton.leadingAnchor, bottom: nil, left: view.leadingAnchor,
+                    padding: .init(top: 15, left: 16, bottom: 0, right: 10), size: .init(width: 0, height: 100))
 
+        saveButton.anchor(top: url.bottomAnchor, right: view.trailingAnchor, bottom: nil, left: noteView.trailingAnchor, padding: .init(top: 15, left: 0, bottom: 0, right: 16), size: .init(width: 60, height: 100))
+
+        deleteButton.anchor(top: noteView.bottomAnchor, right: view.trailingAnchor, bottom: scrollView.bottomAnchor, left: view.leadingAnchor, padding: .init(top: 15, left: 16, bottom: 0, right: 16), size: .init(width: 0, height: 50))
+
+    }
+
+    @objc private func saveNote() {
+
+        if let note = getNote() {
+            guard let container = container else { return }
+
+            note.content = noteView.text
+
+            do {
+                try container.viewContext.save()
+            } catch {
+                print(error.localizedDescription)
+            }
+
+        } else {
+            guard let container = container else { return }
+            guard let entity = NSEntityDescription.entity(forEntityName: "Note", in: container.viewContext) else { return }
+
+            let note = NSManagedObject(entity: entity, insertInto: container.viewContext)
+            note.setValue(noteView.text ?? "", forKey: "content")
+            note.setValue(detailBook?.isbn13 ?? "", forKey: "isbn13")
+
+            do {
+                try container.viewContext.save()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+
+    private func fetchNote() {
+        guard let note = getNote() else { return }
+
+        self.noteView.text = note.content
+    }
+
+    private func getNote() -> Note? {
+        do {
+            guard let container = container else { return nil }
+            guard let note = try container.viewContext.fetch(Note.fetchRequest()) as? [Note] else { return nil}
+
+            let bookNote = note.first { $0.isbn13 == self.detailBook?.isbn13}
+            return bookNote
+
+        } catch {
+            print(error.localizedDescription)
+            return nil
+        }
+    }
+
+    @objc private func deleteNote() {
+        if let note = getNote() {
+
+            self.noteView.text = ""
+
+            guard let container = container else { return }
+
+            container.viewContext.delete(note)
+
+            do {
+                try container.viewContext.save()
+            } catch {
+                print(error.localizedDescription)
+            }
+
+        }
     }
 }
