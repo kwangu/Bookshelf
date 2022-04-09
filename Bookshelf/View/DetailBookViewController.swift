@@ -29,7 +29,7 @@ class DetailBookViewController: UIViewController {
                                  completionHandler: { success, book in
             if success {
                 self.detailBook = book
-
+                print(book)
                 DispatchQueue.main.async {
                     self.setupDetailUI()
                 }
@@ -41,6 +41,13 @@ class DetailBookViewController: UIViewController {
     }
 
     func setupDetailUI() {
+
+//        let scrollView = UIScrollView()
+//        scrollView.backgroundColor = .systemRed
+//        self.view.addSubview(scrollView)
+//
+//        scrollView.anchor(top: view.topAnchor, right: view.trailingAnchor, bottom: view.bottomAnchor, left: view.leadingAnchor)
+
         let navBarHeight = UIApplication.shared.statusBarFrame.size.height +
                  (navigationController?.navigationBar.frame.height ?? 0.0)
 
@@ -147,5 +154,6 @@ class DetailBookViewController: UIViewController {
 
         url.anchor(top: desc.bottomAnchor, right: view.trailingAnchor, bottom: nil, left: view.leadingAnchor,
                      padding: .init(top: 5, left: 16, bottom: 0, right: 16))
+
     }
 }
