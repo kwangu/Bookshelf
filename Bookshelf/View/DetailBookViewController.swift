@@ -64,72 +64,87 @@ class DetailBookViewController: UIViewController {
         let title = UILabel()
         scrollView.addSubview(title)
         title.numberOfLines = 0
+        title.textColor = .black
         title.text = "title : \(detailBook?.title ?? "")"
 
         let subtitle = UILabel()
         scrollView.addSubview(subtitle)
         subtitle.numberOfLines = 0
+        subtitle.textColor = .black
         subtitle.text = "subtitle : \(detailBook?.subtitle ?? "")"
 
         let authors = UILabel()
         scrollView.addSubview(authors)
         authors.numberOfLines = 0
+        authors.textColor = .black
         authors.text = "authors : \(detailBook?.authors ?? "")"
 
         let publisher = UILabel()
         scrollView.addSubview(publisher)
         publisher.numberOfLines = 0
+        publisher.textColor = .black
         publisher.text = "publisher : \(detailBook?.publisher ?? "")"
 
         let language = UILabel()
         scrollView.addSubview(language)
         language.numberOfLines = 0
+        language.textColor = .black
         language.text = "language : \(detailBook?.language ?? "")"
 
         let isbn10 = UILabel()
         scrollView.addSubview(isbn10)
         isbn10.numberOfLines = 0
+        isbn10.textColor = .black
         isbn10.text = "isbn10 : \(detailBook?.isbn10 ?? "")"
 
         let isbn13 = UILabel()
         scrollView.addSubview(isbn13)
         isbn13.numberOfLines = 0
+        isbn13.textColor = .black
         isbn13.text = "isbn13 : \(detailBook?.isbn13 ?? "")"
 
         let pages = UILabel()
         scrollView.addSubview(pages)
         pages.numberOfLines = 0
+        pages.textColor = .black
         pages.text = "pages : \(detailBook?.pages ?? "")"
 
         let year = UILabel()
         scrollView.addSubview(year)
         year.numberOfLines = 0
+        year.textColor = .black
         year.text = "year : \(detailBook?.year ?? "")"
 
         let rating = UILabel()
         scrollView.addSubview(rating)
         rating.numberOfLines = 0
+        rating.textColor = .black
         rating.text = "rating : \(detailBook?.rating ?? "")"
 
         let desc = UILabel()
         scrollView.addSubview(desc)
         desc.numberOfLines = 0
+        desc.textColor = .black
         desc.text = "desc : \(detailBook?.desc ?? "")"
 
         let price = UILabel()
         scrollView.addSubview(price)
         price.numberOfLines = 0
+        price.textColor = .black
         price.text = "price : \(detailBook?.price ?? "")"
 
         let url = UITextView()
         scrollView.addSubview(url)
         url.text = detailBook?.url
+        url.backgroundColor = .white
         url.isEditable = false
         url.isScrollEnabled = false
         url.dataDetectorTypes = .link
         url.isUserInteractionEnabled = true
 
         scrollView.addSubview(noteView)
+        noteView.backgroundColor = .white
+        noteView.textColor = .black
         noteView.layer.borderWidth = 1.0
         noteView.layer.borderColor = UIColor.systemGray.cgColor
 
@@ -139,6 +154,7 @@ class DetailBookViewController: UIViewController {
         saveButton.titleLabel?.numberOfLines = 0
         saveButton.layer.borderColor = UIColor.gray.cgColor
         saveButton.layer.borderWidth = 1.0
+        saveButton.backgroundColor = .white
         saveButton.addTarget(self, action: #selector(saveNote), for: .touchUpInside)
         scrollView.addSubview(saveButton)
 

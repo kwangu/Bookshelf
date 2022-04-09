@@ -29,11 +29,14 @@ class SearchViewController: UIViewController {
 
         self.title = "Search"
         self.navigationController?.navigationBar.barTintColor = .white
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
+
         self.view.backgroundColor = .white
 
         searchBar.backgroundColor = .white
-        searchBar.borderStyle = .roundedRect
         searchBar.textColor = .black
+        searchBar.layer.borderWidth = 1.0
+        searchBar.layer.borderColor = UIColor.gray.cgColor
         searchBar.placeholder = "search books"
 
         view.addSubview(searchBar)
@@ -41,12 +44,15 @@ class SearchViewController: UIViewController {
         let searchButton = UIButton()
         searchButton.setTitle("search", for: .normal)
         searchButton.setTitleColor(.black, for: .normal)
+        searchButton.layer.borderWidth = 1.0
+        searchButton.layer.borderColor = UIColor.gray.cgColor
         view.addSubview(searchButton)
         searchButton.addTarget(self, action: #selector(firstSearchBooks), for: .touchUpInside)
 
         tableView.separatorColor = .clear
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.backgroundColor = .white
         tableView.register(BooksTableViewCell.self, forCellReuseIdentifier: "BooksTableViewCell")
         view.addSubview(tableView)
 
@@ -122,6 +128,7 @@ class SearchViewController: UIViewController {
         if indexPath.row == books.count - 10 {
             self.searchBooks()
         }
+
         return cell
     }
 
