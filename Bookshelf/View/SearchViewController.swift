@@ -55,6 +55,13 @@ class SearchViewController: UIViewController {
         searchButton.anchor(top: searchBar.topAnchor, right: view.trailingAnchor, bottom: nil, left: searchBar.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 16), size: .init(width: 70, height: 50))
 
         tableView.anchor(top: searchBar.bottomAnchor, right: view.trailingAnchor, bottom: view.bottomAnchor, left: view.leadingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+
+        // test용
+        searchBar.text = "swift"
+        self.firstSearchBooks()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            self.showDetailView(book: self.books[0])
+        })
     }
 
     @objc private func firstSearchBooks() {
@@ -85,7 +92,7 @@ class SearchViewController: UIViewController {
                     self.books.append(book)
                 }
             } else {
-                print("netwrok error")
+                print("error")
             }
 
             DispatchQueue.main.async {
@@ -95,8 +102,9 @@ class SearchViewController: UIViewController {
         })
     }
 
-    @objc private func showDetailView() {
+    private func showDetailView(book: Book) {
         let detailView = DetailBookViewController()
+        detailView.book = book
         self.navigationController?.pushViewController(detailView, animated: true)
     }
 }
@@ -110,8 +118,9 @@ class SearchViewController: UIViewController {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "BooksTableViewCell", for: indexPath) as? BooksTableViewCell else { return UITableViewCell()}
         let book = self.books[indexPath.row]
+
         cell.title.text = book.title
-        imageLoader.getImage(urlString: book.image, completionHandler: { image in
+        self.imageLoader.getImage(urlString: book.image, completionHandler: { image in
             DispatchQueue.main.async {
                 cell.img.image = image
             }
@@ -120,7 +129,10 @@ class SearchViewController: UIViewController {
         if indexPath.row == books.count - 10 {
             self.searchBooks()
         }
-
         return cell
     }
+
+     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+         self.showDetailView(book: self.books[indexPath.row])
+     }
  }

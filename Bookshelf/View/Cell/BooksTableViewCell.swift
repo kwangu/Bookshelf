@@ -23,10 +23,10 @@ class BooksTableViewCell: UITableViewCell {
         return label
     }()
 
-    override func prepareForReuse() {
-        self.title.text = ""
-        self.img.image = nil
-    }
+//    override func prepareForReuse() {
+//        self.title.text = ""
+//        self.img.image = nil
+//    }
 
     private func setConstraint() {
         contentView.addSubview(img)
