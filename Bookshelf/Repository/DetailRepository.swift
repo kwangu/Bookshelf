@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 class DetailRepository {
-    var container: NSPersistentContainer?
+    private var container: NSPersistentContainer?
 
     init() {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate

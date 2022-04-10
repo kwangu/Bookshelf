@@ -12,13 +12,13 @@ class ImageLoader {
     private let imageCache = NSCache<NSString, UIImage>()
 
     init() {
-        imageCache.countLimit = 100
+        self.imageCache.countLimit = 100
     }
 
     func getImage(urlString: String, completionHandler: @escaping (UIImage) -> Void) {
 
         // cache
-        if let image = imageCache.object(forKey: urlString as NSString) {
+        if let image = self.imageCache.object(forKey: urlString as NSString) {
             completionHandler(image)
             return
         }
@@ -35,7 +35,7 @@ class ImageLoader {
                 guard let imageData = try? Data(contentsOf: filePath) else { return }
                 guard let image = UIImage(data: imageData) else { return }
 
-                imageCache.setObject(image, forKey: url.lastPathComponent as NSString)
+                self.imageCache.setObject(image, forKey: url.lastPathComponent as NSString)
                 completionHandler(image)
                 return
             }

@@ -10,7 +10,7 @@ import UIKit
 
 class DetailViewController: UIViewController {
     private let imageLoader = ImageLoader()
-    let noteView = UITextView()
+    private let noteView = UITextView()
 
     var book: BookModel?
 
@@ -23,12 +23,12 @@ class DetailViewController: UIViewController {
         self.navigationController?.navigationBar.barTintColor = .white
         self.view.backgroundColor = .white
 
-        detailViewModel.bookInfoUpdated = {
+        self.detailViewModel.bookInfoUpdated = {
             DispatchQueue.main.async {
                 self.setupUI()
             }
         }
-        detailViewModel.detailBookInfo(isbn13: book?.isbn13 ?? "")
+        self.detailViewModel.detailBookInfo(isbn13: book?.isbn13 ?? "")
     }
 
     func setupUI() {

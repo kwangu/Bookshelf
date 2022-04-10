@@ -8,15 +8,15 @@
 import Foundation
 
 class SearchService {
-    var currentPage = 0
-    var totalPage: Int?
-    let searchRepository = SearchRepository()
+    private var currentPage = 0
+    private var totalPage: Int?
+    private let searchRepository = SearchRepository()
 
     func searchBooks(keyword: String, completionHandler: @escaping ([BookModel]) -> Void) {
 
         self.currentPage += 1
 
-        if totalPage != nil && self.currentPage > totalPage ?? 0 {
+        if self.totalPage != nil && self.currentPage > self.totalPage ?? 0 {
             return
         }
 

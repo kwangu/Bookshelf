@@ -12,9 +12,9 @@ class SearchViewController: UIViewController {
     private let searchBar = UITextField()
     private let tableView = UITableView()
 
-    let searchViewModel = SearchViewModel()
+    private let searchViewModel = SearchViewModel()
 
-    let imageLoader = ImageLoader()
+    private let imageLoader = ImageLoader()
 
     override func viewDidLoad() {
         super.viewDidLoad()

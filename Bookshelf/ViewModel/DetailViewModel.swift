@@ -16,12 +16,14 @@ class DetailViewModel {
             bookInfoUpdated()
         }
     }
-    let detailService = DetailService()
+
     var note: String = "" {
         didSet {
             noteUpdated()
         }
     }
+
+    private let detailService = DetailService()
 
     func detailBookInfo(isbn13: String) {
         self.detailService.detailBookInfo(isbn13: isbn13) {[weak self] detailModel in
