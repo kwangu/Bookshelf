@@ -63,9 +63,23 @@ class SearchViewController: UIViewController {
     }
 
     @objc private func searchBooks() {
-        self.searchViewModel.searchUpdated = {
+        self.searchViewModel.searchUpdated = { count in
             DispatchQueue.main.async {
-                self.tableView.reloadData()
+
+                if count == 0 {
+                    self.tableView.reloadData()
+                    return
+                }
+
+                var indexPaths = [IndexPath]()
+                for i in 1...count {
+                    indexPaths.append(IndexPath(row: self.searchViewModel.books.count - i, section: 0))
+                }
+
+                self.tableView.beginUpdates()
+                self.tableView.insertRows(at: indexPaths, with: .automatic)
+                self.tableView.endUpdates()
+//                self.tableView.reloadData()
             }
         }
         self.searchViewModel.searchBooks(keyword: searchBar.text ?? "")
@@ -75,9 +89,6 @@ class SearchViewController: UIViewController {
         let detailView = DetailViewController()
         detailView.book = book
         self.navigationController?.pushViewController(detailView, animated: true)
-
-//        let testView = TestViewController()
-//        self.navigationController?.pushViewController(testView, animated: true)
     }
 }
 
@@ -98,7 +109,7 @@ class SearchViewController: UIViewController {
             }
         })
 
-        if indexPath.row == self.searchViewModel.books.count - 10 {
+        if indexPath.row == self.searchViewModel.books.count - 9 {
             self.searchBooks()
         }
 

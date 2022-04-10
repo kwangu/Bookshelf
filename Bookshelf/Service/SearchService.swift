@@ -12,7 +12,10 @@ class SearchService {
     private var totalPage: Int?
     private let searchRepository = SearchRepository()
 
-    func searchBooks(keyword: String, completionHandler: @escaping ([BookModel]) -> Void) {
+    func searchBooks(isFirst: Bool, keyword: String, completionHandler: @escaping ([BookModel]) -> Void) {
+        if isFirst {
+            currentPage = 0
+        }
 
         self.currentPage += 1
 
