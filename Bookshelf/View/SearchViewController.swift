@@ -75,6 +75,9 @@ class SearchViewController: UIViewController {
         let detailView = DetailViewController()
         detailView.book = book
         self.navigationController?.pushViewController(detailView, animated: true)
+
+//        let testView = TestViewController()
+//        self.navigationController?.pushViewController(testView, animated: true)
     }
 }
 

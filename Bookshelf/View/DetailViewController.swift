@@ -9,26 +9,39 @@ import Foundation
 import UIKit
 
 class DetailViewController: UIViewController {
-    private let imageLoader = ImageLoader()
+    private var imageLoader: ImageLoader?
     private let noteView = UITextView()
 
     var book: BookModel?
 
-    private let detailViewModel = DetailViewModel()
+    private var detailViewModel: DetailViewModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        imageLoader = ImageLoader()
+        detailViewModel = DetailViewModel()
 
         self.title = "Detail"
         self.navigationController?.navigationBar.barTintColor = .white
         self.view.backgroundColor = .white
 
-        self.detailViewModel.bookInfoUpdated = {
+        self.detailViewModel?.bookInfoUpdated = {
             DispatchQueue.main.async {
                 self.setupUI()
             }
         }
-        self.detailViewModel.detailBookInfo(isbn13: book?.isbn13 ?? "")
+        self.detailViewModel?.detailBookInfo(isbn13: book?.isbn13 ?? "")
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.imageLoader = nil
+        self.detailViewModel = nil
+    }
+
+    deinit {
+        print("detail deinit")
     }
 
     func setupUI() {
@@ -39,7 +52,7 @@ class DetailViewController: UIViewController {
         scrollView.anchor(top: view.topAnchor, right: view.trailingAnchor, bottom: view.bottomAnchor, left: view.leadingAnchor)
 
         let detailImage = UIImageView()
-        imageLoader.getImage(urlString: book?.image ?? "", completionHandler: { image in
+        imageLoader?.getImage(urlString: book?.image ?? "", completionHandler: { image in
             detailImage.image = image
         })
         scrollView.addSubview(detailImage)
@@ -50,77 +63,77 @@ class DetailViewController: UIViewController {
         scrollView.addSubview(title)
         title.numberOfLines = 0
         title.textColor = .black
-        title.text = "title : \(self.detailViewModel.detailBook?.title ?? "")"
+        title.text = "title : \(self.detailViewModel?.detailBook?.title ?? "")"
 
         let subtitle = UILabel()
         scrollView.addSubview(subtitle)
         subtitle.numberOfLines = 0
         subtitle.textColor = .black
-        subtitle.text = "subtitle : \(self.detailViewModel.detailBook?.subtitle ?? "")"
+        subtitle.text = "subtitle : \(self.detailViewModel?.detailBook?.subtitle ?? "")"
 
         let authors = UILabel()
         scrollView.addSubview(authors)
         authors.numberOfLines = 0
         authors.textColor = .black
-        authors.text = "authors : \(self.detailViewModel.detailBook?.authors ?? "")"
+        authors.text = "authors : \(self.detailViewModel?.detailBook?.authors ?? "")"
 
         let publisher = UILabel()
         scrollView.addSubview(publisher)
         publisher.numberOfLines = 0
         publisher.textColor = .black
-        publisher.text = "publisher : \(self.detailViewModel.detailBook?.publisher ?? "")"
+        publisher.text = "publisher : \(self.detailViewModel?.detailBook?.publisher ?? "")"
 
         let language = UILabel()
         scrollView.addSubview(language)
         language.numberOfLines = 0
         language.textColor = .black
-        language.text = "language : \(self.detailViewModel.detailBook?.language ?? "")"
+        language.text = "language : \(self.detailViewModel?.detailBook?.language ?? "")"
 
         let isbn10 = UILabel()
         scrollView.addSubview(isbn10)
         isbn10.numberOfLines = 0
         isbn10.textColor = .black
-        isbn10.text = "isbn10 : \(self.detailViewModel.detailBook?.isbn10 ?? "")"
+        isbn10.text = "isbn10 : \(self.detailViewModel?.detailBook?.isbn10 ?? "")"
 
         let isbn13 = UILabel()
         scrollView.addSubview(isbn13)
         isbn13.numberOfLines = 0
         isbn13.textColor = .black
-        isbn13.text = "isbn13 : \(self.detailViewModel.detailBook?.isbn13 ?? "")"
+        isbn13.text = "isbn13 : \(self.detailViewModel?.detailBook?.isbn13 ?? "")"
 
         let pages = UILabel()
         scrollView.addSubview(pages)
         pages.numberOfLines = 0
         pages.textColor = .black
-        pages.text = "pages : \(self.detailViewModel.detailBook?.pages ?? "")"
+        pages.text = "pages : \(self.detailViewModel?.detailBook?.pages ?? "")"
 
         let year = UILabel()
         scrollView.addSubview(year)
         year.numberOfLines = 0
         year.textColor = .black
-        year.text = "year : \(self.detailViewModel.detailBook?.year ?? "")"
+        year.text = "year : \(self.detailViewModel?.detailBook?.year ?? "")"
 
         let rating = UILabel()
         scrollView.addSubview(rating)
         rating.numberOfLines = 0
         rating.textColor = .black
-        rating.text = "rating : \(self.detailViewModel.detailBook?.rating ?? "")"
+        rating.text = "rating : \(self.detailViewModel?.detailBook?.rating ?? "")"
 
         let desc = UILabel()
         scrollView.addSubview(desc)
         desc.numberOfLines = 0
         desc.textColor = .black
-        desc.text = "desc : \(self.detailViewModel.detailBook?.desc ?? "")"
+        desc.text = "desc : \(self.detailViewModel?.detailBook?.desc ?? "")"
 
         let price = UILabel()
         scrollView.addSubview(price)
         price.numberOfLines = 0
         price.textColor = .black
-        price.text = "price : \(self.detailViewModel.detailBook?.price ?? "")"
+        price.text = "price : \(self.detailViewModel?.detailBook?.price ?? "")"
 
         let url = UITextView()
         scrollView.addSubview(url)
-        url.text = self.detailViewModel.detailBook?.url
+        url.text = self.detailViewModel?.detailBook?.url
         url.backgroundColor = .white
         url.isEditable = false
         url.isScrollEnabled = false
@@ -202,22 +215,22 @@ class DetailViewController: UIViewController {
     }
 
     @objc private func saveNote() {
-        self.detailViewModel.saveNote(isbn13: self.detailViewModel.detailBook?.isbn13 ?? "", note: noteView.text ?? "")
+        self.detailViewModel?.saveNote(isbn13: self.detailViewModel?.detailBook?.isbn13 ?? "", note: noteView.text ?? "")
     }
 
     @objc private func deleteNote() {
         self.fetchNote()
 
-        self.detailViewModel.deleteNote(isbn13: self.detailViewModel.detailBook?.isbn13 ?? "")
+        self.detailViewModel?.deleteNote(isbn13: self.detailViewModel?.detailBook?.isbn13 ?? "")
     }
 
     private func fetchNote() {
-        self.detailViewModel.noteUpdated = {
+        self.detailViewModel?.noteUpdated = {
             DispatchQueue.main.async {
-                self.noteView.text = self.detailViewModel.note
+                self.noteView.text = self.detailViewModel?.note
             }
         }
 
-        self.detailViewModel.fetchNote(isbn13: self.detailViewModel.detailBook?.isbn13 ?? "")
+        self.detailViewModel?.fetchNote(isbn13: self.detailViewModel?.detailBook?.isbn13 ?? "")
     }
 }

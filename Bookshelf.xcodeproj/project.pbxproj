@@ -58,6 +58,9 @@
 		D477B19128030BF0001A3384 /* DetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477B19028030BF0001A3384 /* DetailRepository.swift */; };
 		D477B19228030BF0001A3384 /* DetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477B19028030BF0001A3384 /* DetailRepository.swift */; };
 		D477B19328030BF0001A3384 /* DetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477B19028030BF0001A3384 /* DetailRepository.swift */; };
+		D477B195280324C4001A3384 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477B194280324C4001A3384 /* TestViewController.swift */; };
+		D477B196280324C4001A3384 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477B194280324C4001A3384 /* TestViewController.swift */; };
+		D477B197280324C4001A3384 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477B194280324C4001A3384 /* TestViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +108,7 @@
 		D477B18828030B5A001A3384 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		D477B18C28030BE1001A3384 /* DetailService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailService.swift; sourceTree = "<group>"; };
 		D477B19028030BF0001A3384 /* DetailRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRepository.swift; sourceTree = "<group>"; };
+		D477B194280324C4001A3384 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +209,7 @@
 				D477B12D280108B2001A3384 /* Cell */,
 				3E30674D2800287B00C69875 /* SearchViewController.swift */,
 				3E3067512800288800C69875 /* DetailViewController.swift */,
+				D477B194280324C4001A3384 /* TestViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -422,6 +427,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D477B152280168D5001A3384 /* Note+CoreDataProperties.swift in Sources */,
+				D477B195280324C4001A3384 /* TestViewController.swift in Sources */,
 				D477B12528006742001A3384 /* UIView+Extension.swift in Sources */,
 				D477B18D28030BE1001A3384 /* DetailService.swift in Sources */,
 				3E30675628002FA300C69875 /* BookModel.swift in Sources */,
@@ -448,6 +454,7 @@
 			files = (
 				D477B17C2803062E001A3384 /* SearchViewModel.swift in Sources */,
 				D477B12628006742001A3384 /* UIView+Extension.swift in Sources */,
+				D477B196280324C4001A3384 /* TestViewController.swift in Sources */,
 				D477B18A28030B5A001A3384 /* DetailViewModel.swift in Sources */,
 				D477B19228030BF0001A3384 /* DetailRepository.swift in Sources */,
 				3E30675728002FA300C69875 /* BookModel.swift in Sources */,
@@ -470,6 +477,7 @@
 			files = (
 				D477B18B28030B5A001A3384 /* DetailViewModel.swift in Sources */,
 				D477B18F28030BE1001A3384 /* DetailService.swift in Sources */,
+				D477B197280324C4001A3384 /* TestViewController.swift in Sources */,
 				D477B18328030648001A3384 /* SearchService.swift in Sources */,
 				D477B12B280071D9001A3384 /* BooksTableViewCell.swift in Sources */,
 				D477B13A2801496B001A3384 /* DetailModel.swift in Sources */,
