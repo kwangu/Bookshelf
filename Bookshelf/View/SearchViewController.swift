@@ -12,10 +12,9 @@ class SearchViewController: UIViewController {
     private let searchBar = UITextField()
     private let tableView = UITableView()
 
-    private var books = [Book]()
+    let searchViewModel = SearchViewModel()
+
     let imageLoader = ImageLoader()
-    var currentPage = 0
-    var totalPage: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +46,7 @@ class SearchViewController: UIViewController {
         searchButton.layer.borderWidth = 1.0
         searchButton.layer.borderColor = UIColor.gray.cgColor
         view.addSubview(searchButton)
-        searchButton.addTarget(self, action: #selector(firstSearchBooks), for: .touchUpInside)
+        searchButton.addTarget(self, action: #selector(searchBooks), for: .touchUpInside)
 
         tableView.separatorColor = .clear
         tableView.delegate = self
@@ -63,46 +62,17 @@ class SearchViewController: UIViewController {
         tableView.anchor(top: searchBar.bottomAnchor, right: view.trailingAnchor, bottom: view.bottomAnchor, left: view.leadingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
     }
 
-    @objc private func firstSearchBooks() {
-        self.books.removeAll()
-        self.currentPage = 0
-        self.totalPage = nil
-
-        searchBooks()
-    }
-
     @objc private func searchBooks() {
-
-        self.currentPage += 1
-
-        if totalPage != nil && self.currentPage > totalPage ?? 0 {
-            return
-        }
-
-        Network().getSearchBooks(url: "https://api.itbook.store/1.0/search/\(searchBar.text ?? "")/\(String(currentPage))", completionHandler: { success, books in
-            if success {
-
-                if self.totalPage == nil {
-                    let total = Int(books.total) ?? 0
-                    self.totalPage = total % 10 == 0 ? total / 10 : (total / 10)+1
-                }
-
-                books.books.forEach { book in
-                    self.books.append(book)
-                }
-            } else {
-                print("error")
-            }
-
+        self.searchViewModel.searchUpdated = {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
-
-        })
+        }
+        self.searchViewModel.searchBooks(keyword: searchBar.text ?? "")
     }
 
-    private func showDetailView(book: Book) {
-        let detailView = DetailBookViewController()
+    private func showDetailView(book: BookModel) {
+        let detailView = DetailViewController()
         detailView.book = book
         self.navigationController?.pushViewController(detailView, animated: true)
     }
@@ -111,12 +81,12 @@ class SearchViewController: UIViewController {
  extension SearchViewController: UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.books.count
+        self.searchViewModel.books.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "BooksTableViewCell", for: indexPath) as? BooksTableViewCell else { return UITableViewCell()}
-        let book = self.books[indexPath.row]
+        let book = self.searchViewModel.books[indexPath.row]
 
         cell.title.text = book.title
         self.imageLoader.getImage(urlString: book.image, completionHandler: { image in
@@ -125,7 +95,7 @@ class SearchViewController: UIViewController {
             }
         })
 
-        if indexPath.row == books.count - 10 {
+        if indexPath.row == self.searchViewModel.books.count - 10 {
             self.searchBooks()
         }
 
@@ -133,6 +103,6 @@ class SearchViewController: UIViewController {
     }
 
      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-         self.showDetailView(book: self.books[indexPath.row])
+         self.showDetailView(book: self.searchViewModel.books[indexPath.row])
      }
  }

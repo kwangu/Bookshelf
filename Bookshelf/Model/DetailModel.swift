@@ -1,5 +1,5 @@
 //
-//  DetailBook.swift
+//  DetailModel.swift
 //  Bookshelf
 //
 //  Created by 강관구 on 2022/04/09.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DetailBook: Codable {
+struct DetailModel: Codable {
     var error: String
     var title: String
     var subtitle: String

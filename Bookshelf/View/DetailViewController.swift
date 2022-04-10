@@ -7,46 +7,31 @@
 
 import Foundation
 import UIKit
-import CoreData
 
-class DetailBookViewController: UIViewController {
+class DetailViewController: UIViewController {
     private let imageLoader = ImageLoader()
     let noteView = UITextView()
 
-    var book: Book?
-    var detailBook: DetailBook?
-    var container: NSPersistentContainer?
+    var book: BookModel?
+
+    private let detailViewModel = DetailViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        self.container = appDelegate?.persistentContainer
 
-        setupUI()
-    }
-
-    func setupUI() {
         self.title = "Detail"
         self.navigationController?.navigationBar.barTintColor = .white
         self.view.backgroundColor = .white
 
-        Network().getDetailBooks(url: "https://api.itbook.store/1.0/books/\(book?.isbn13 ?? "")",
-                                 completionHandler: { success, book in
-            if success {
-                self.detailBook = book
-                print(book)
-                DispatchQueue.main.async {
-                    self.setupDetailUI()
-                    self.fetchNote()
-                }
-
-            } else {
-                print("error")
+        detailViewModel.bookInfoUpdated = {
+            DispatchQueue.main.async {
+                self.setupUI()
             }
-        })
+        }
+        detailViewModel.detailBookInfo(isbn13: book?.isbn13 ?? "")
     }
 
-    func setupDetailUI() {
+    func setupUI() {
 
         let scrollView = UIScrollView()
         self.view.addSubview(scrollView)
@@ -65,77 +50,77 @@ class DetailBookViewController: UIViewController {
         scrollView.addSubview(title)
         title.numberOfLines = 0
         title.textColor = .black
-        title.text = "title : \(detailBook?.title ?? "")"
+        title.text = "title : \(self.detailViewModel.detailBook?.title ?? "")"
 
         let subtitle = UILabel()
         scrollView.addSubview(subtitle)
         subtitle.numberOfLines = 0
         subtitle.textColor = .black
-        subtitle.text = "subtitle : \(detailBook?.subtitle ?? "")"
+        subtitle.text = "subtitle : \(self.detailViewModel.detailBook?.subtitle ?? "")"
 
         let authors = UILabel()
         scrollView.addSubview(authors)
         authors.numberOfLines = 0
         authors.textColor = .black
-        authors.text = "authors : \(detailBook?.authors ?? "")"
+        authors.text = "authors : \(self.detailViewModel.detailBook?.authors ?? "")"
 
         let publisher = UILabel()
         scrollView.addSubview(publisher)
         publisher.numberOfLines = 0
         publisher.textColor = .black
-        publisher.text = "publisher : \(detailBook?.publisher ?? "")"
+        publisher.text = "publisher : \(self.detailViewModel.detailBook?.publisher ?? "")"
 
         let language = UILabel()
         scrollView.addSubview(language)
         language.numberOfLines = 0
         language.textColor = .black
-        language.text = "language : \(detailBook?.language ?? "")"
+        language.text = "language : \(self.detailViewModel.detailBook?.language ?? "")"
 
         let isbn10 = UILabel()
         scrollView.addSubview(isbn10)
         isbn10.numberOfLines = 0
         isbn10.textColor = .black
-        isbn10.text = "isbn10 : \(detailBook?.isbn10 ?? "")"
+        isbn10.text = "isbn10 : \(self.detailViewModel.detailBook?.isbn10 ?? "")"
 
         let isbn13 = UILabel()
         scrollView.addSubview(isbn13)
         isbn13.numberOfLines = 0
         isbn13.textColor = .black
-        isbn13.text = "isbn13 : \(detailBook?.isbn13 ?? "")"
+        isbn13.text = "isbn13 : \(self.detailViewModel.detailBook?.isbn13 ?? "")"
 
         let pages = UILabel()
         scrollView.addSubview(pages)
         pages.numberOfLines = 0
         pages.textColor = .black
-        pages.text = "pages : \(detailBook?.pages ?? "")"
+        pages.text = "pages : \(self.detailViewModel.detailBook?.pages ?? "")"
 
         let year = UILabel()
         scrollView.addSubview(year)
         year.numberOfLines = 0
         year.textColor = .black
-        year.text = "year : \(detailBook?.year ?? "")"
+        year.text = "year : \(self.detailViewModel.detailBook?.year ?? "")"
 
         let rating = UILabel()
         scrollView.addSubview(rating)
         rating.numberOfLines = 0
         rating.textColor = .black
-        rating.text = "rating : \(detailBook?.rating ?? "")"
+        rating.text = "rating : \(self.detailViewModel.detailBook?.rating ?? "")"
 
         let desc = UILabel()
         scrollView.addSubview(desc)
         desc.numberOfLines = 0
         desc.textColor = .black
-        desc.text = "desc : \(detailBook?.desc ?? "")"
+        desc.text = "desc : \(self.detailViewModel.detailBook?.desc ?? "")"
 
         let price = UILabel()
         scrollView.addSubview(price)
         price.numberOfLines = 0
         price.textColor = .black
-        price.text = "price : \(detailBook?.price ?? "")"
+        price.text = "price : \(self.detailViewModel.detailBook?.price ?? "")"
 
         let url = UITextView()
         scrollView.addSubview(url)
-        url.text = detailBook?.url
+        url.text = self.detailViewModel.detailBook?.url
         url.backgroundColor = .white
         url.isEditable = false
         url.isScrollEnabled = false
@@ -213,72 +198,26 @@ class DetailBookViewController: UIViewController {
 
         deleteButton.anchor(top: noteView.bottomAnchor, right: view.trailingAnchor, bottom: scrollView.bottomAnchor, left: view.leadingAnchor, padding: .init(top: 15, left: 16, bottom: 0, right: 16), size: .init(width: 0, height: 50))
 
+        self.fetchNote()
     }
 
     @objc private func saveNote() {
-
-        if let note = getNote() {
-            guard let container = container else { return }
-
-            note.content = noteView.text
-
-            do {
-                try container.viewContext.save()
-            } catch {
-                print(error.localizedDescription)
-            }
-
-        } else {
-            guard let container = container else { return }
-            guard let entity = NSEntityDescription.entity(forEntityName: "Note", in: container.viewContext) else { return }
-
-            let note = NSManagedObject(entity: entity, insertInto: container.viewContext)
-            note.setValue(noteView.text ?? "", forKey: "content")
-            note.setValue(detailBook?.isbn13 ?? "", forKey: "isbn13")
-
-            do {
-                try container.viewContext.save()
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-    }
-
-    private func fetchNote() {
-        guard let note = getNote() else { return }
-
-        self.noteView.text = note.content
-    }
-
-    private func getNote() -> Note? {
-        do {
-            guard let container = container else { return nil }
-            guard let note = try container.viewContext.fetch(Note.fetchRequest()) as? [Note] else { return nil}
-
-            let bookNote = note.first { $0.isbn13 == self.detailBook?.isbn13}
-            return bookNote
-
-        } catch {
-            print(error.localizedDescription)
-            return nil
-        }
+        self.detailViewModel.saveNote(isbn13: self.detailViewModel.detailBook?.isbn13 ?? "", note: noteView.text ?? "")
     }
 
     @objc private func deleteNote() {
-        if let note = getNote() {
+        self.fetchNote()
 
-            self.noteView.text = ""
+        self.detailViewModel.deleteNote(isbn13: self.detailViewModel.detailBook?.isbn13 ?? "")
+    }
 
-            guard let container = container else { return }
-
-            container.viewContext.delete(note)
-
-            do {
-                try container.viewContext.save()
-            } catch {
-                print(error.localizedDescription)
+    private func fetchNote() {
+        self.detailViewModel.noteUpdated = {
+            DispatchQueue.main.async {
+                self.noteView.text = self.detailViewModel.note
             }
-
         }
+
+        self.detailViewModel.fetchNote(isbn13: self.detailViewModel.detailBook?.isbn13 ?? "")
     }
 }
