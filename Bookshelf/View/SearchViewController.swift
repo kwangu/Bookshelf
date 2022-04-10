@@ -103,13 +103,15 @@ class SearchViewController: UIViewController {
         let book = self.searchViewModel.books[indexPath.row]
 
         cell.title.text = book.title
+        print("load : \(indexPath.row)")
         self.imageLoader.getImage(urlString: book.image, completionHandler: { image in
             DispatchQueue.main.async {
+                print("loaded : \(indexPath.row)")
                 cell.img.image = image
             }
         })
 
-        if indexPath.row == self.searchViewModel.books.count - 9 {
+        if indexPath.row == (self.searchViewModel.books.count < 10 ? 0 : self.searchViewModel.books.count - 9) {
             self.searchBooks()
         }
 

@@ -22,7 +22,7 @@ class DetailViewController: UIViewController {
         imageLoader = ImageLoader()
         detailViewModel = DetailViewModel()
 
-        self.title = "Detail"
+        self.title = book?.title ?? ""
         self.navigationController?.navigationBar.barTintColor = .white
         self.view.backgroundColor = .white
 
@@ -38,10 +38,6 @@ class DetailViewController: UIViewController {
         super.viewWillDisappear(animated)
         self.imageLoader = nil
         self.detailViewModel = nil
-    }
-
-    deinit {
-        print("detail deinit")
     }
 
     func setupUI() {
