@@ -15,6 +15,7 @@ class SearchService {
     func searchBooks(isFirst: Bool, keyword: String, completionHandler: @escaping ([BookModel]) -> Void) {
         if isFirst {
             currentPage = 0
+            totalPage = nil
         }
 
         self.currentPage += 1

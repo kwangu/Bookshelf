@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 class DetailViewController: UIViewController {
-    private var imageLoader: ImageLoader?
     private let noteView = UITextView()
 
     var book: BookModel?
@@ -19,7 +18,6 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        imageLoader = ImageLoader()
         detailViewModel = DetailViewModel()
 
         self.title = book?.title ?? ""
@@ -36,7 +34,6 @@ class DetailViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.imageLoader = nil
         self.detailViewModel = nil
     }
 
@@ -48,9 +45,7 @@ class DetailViewController: UIViewController {
         scrollView.anchor(top: view.topAnchor, right: view.trailingAnchor, bottom: view.bottomAnchor, left: view.leadingAnchor)
 
         let detailImage = UIImageView()
-        imageLoader?.getImage(urlString: book?.image ?? "", completionHandler: { image in
-            detailImage.image = image
-        })
+        detailImage.loadImage(urlString: book?.image ?? "")
         scrollView.addSubview(detailImage)
 
         detailImage.anchor(top: scrollView.topAnchor, right: nil, bottom: nil, left: nil, centerX: scrollView.centerXAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
@@ -203,7 +198,7 @@ class DetailViewController: UIViewController {
         noteView.anchor(top: url.bottomAnchor, right: saveButton.leadingAnchor, bottom: nil, left: view.leadingAnchor,
                     padding: .init(top: 15, left: 16, bottom: 0, right: 10), size: .init(width: 0, height: 100))
 
-        saveButton.anchor(top: url.bottomAnchor, right: view.trailingAnchor, bottom: nil, left: noteView.trailingAnchor, padding: .init(top: 15, left: 0, bottom: 0, right: 16), size: .init(width: 60, height: 100))
+        saveButton.anchor(top: url.bottomAnchor, right: view.trailingAnchor, bottom: nil, left: nil, padding: .init(top: 15, left: 0, bottom: 0, right: 16), size: .init(width: 60, height: 100))
 
         deleteButton.anchor(top: noteView.bottomAnchor, right: view.trailingAnchor, bottom: scrollView.bottomAnchor, left: view.leadingAnchor, padding: .init(top: 15, left: 16, bottom: 0, right: 16), size: .init(width: 0, height: 50))
 

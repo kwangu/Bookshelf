@@ -23,9 +23,9 @@ class BooksTableViewCell: UITableViewCell {
         contentView.addSubview(title)
         contentView.backgroundColor = .white
 
-        img.anchor(top: nil, right: nil, bottom: nil, left: contentView.leadingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: 0), size: .init(width: 80, height: 80))
+        img.anchor(top: contentView.topAnchor, right: nil, bottom: contentView.bottomAnchor, left: contentView.leadingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: 0), size: .init(width: 80, height: 80))
 
-        title.anchor(top: contentView.topAnchor, right: contentView.trailingAnchor, bottom: contentView.bottomAnchor, left: img.trailingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: 0 ), size: .init(width: 0, height: 80))
+        title.anchor(top: contentView.topAnchor, right: contentView.trailingAnchor, bottom: contentView.bottomAnchor, left: img.trailingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: 0 ))
         title.textColor = .black
     }
 

@@ -14,8 +14,6 @@ class SearchViewController: UIViewController {
 
     private let searchViewModel = SearchViewModel()
 
-    private let imageLoader = ImageLoader()
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -57,7 +55,7 @@ class SearchViewController: UIViewController {
 
         searchBar.anchor(top: view.topAnchor, right: searchButton.leadingAnchor, bottom: nil, left: view.leadingAnchor, padding: .init(top: navBarHeight + 16, left: 16, bottom: 0, right: 6), size: .init(width: 0, height: 50))
 
-        searchButton.anchor(top: searchBar.topAnchor, right: view.trailingAnchor, bottom: nil, left: searchBar.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 16), size: .init(width: 70, height: 50))
+        searchButton.anchor(top: searchBar.topAnchor, right: view.trailingAnchor, bottom: nil, left: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 16), size: .init(width: 70, height: 50))
 
         tableView.anchor(top: searchBar.bottomAnchor, right: view.trailingAnchor, bottom: view.bottomAnchor, left: view.leadingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
     }
@@ -79,7 +77,6 @@ class SearchViewController: UIViewController {
                 self.tableView.beginUpdates()
                 self.tableView.insertRows(at: indexPaths, with: .automatic)
                 self.tableView.endUpdates()
-//                self.tableView.reloadData()
             }
         }
         self.searchViewModel.searchBooks(keyword: searchBar.text ?? "")
@@ -103,13 +100,7 @@ class SearchViewController: UIViewController {
         let book = self.searchViewModel.books[indexPath.row]
 
         cell.title.text = book.title
-        print("load : \(indexPath.row)")
-        self.imageLoader.getImage(urlString: book.image, completionHandler: { image in
-            DispatchQueue.main.async {
-                print("loaded : \(indexPath.row)")
-                cell.img.image = image
-            }
-        })
+        cell.img.loadImage(urlString: book.image)
 
         if indexPath.row == (self.searchViewModel.books.count < 10 ? 0 : self.searchViewModel.books.count - 9) {
             self.searchBooks()
@@ -120,5 +111,9 @@ class SearchViewController: UIViewController {
 
      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
          self.showDetailView(book: self.searchViewModel.books[indexPath.row])
+     }
+
+     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+         return 80
      }
  }

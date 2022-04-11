@@ -1,5 +1,5 @@
 //
-//  ImageLoader.swift
+//  UIImageView+Extension.swift
 //  Bookshelf
 //
 //  Created by 강관구 on 2022/04/11.
@@ -8,19 +8,15 @@
 import Foundation
 import UIKit
 
-class ImageLoader {
-    private let imageCache = NSCache<NSString, UIImage>()
+var imageCache = NSCache<NSString, UIImage>()
 
-    init() {
-        imageCache.countLimit = 50
-    }
+extension UIImageView {
 
-    func loadImage(urlString: String, completionHandler: @escaping (UIImage) -> Void) {
+    func loadImage(urlString: String) {
 
         // cache
         if let image = imageCache.object(forKey: urlString as NSString) {
-            completionHandler(image)
-
+            self.image = image
             return
         }
 
@@ -38,7 +34,7 @@ class ImageLoader {
 
                 imageCache.setObject(image, forKey: url.lastPathComponent as NSString)
 
-                completionHandler(image)
+                self.image = image
 
                 return
             }
@@ -47,10 +43,11 @@ class ImageLoader {
         DownloadManager().downloadImage(urlString: urlString) { [weak self] image in
             guard let self = self else { return }
 
-            self.imageCache.setObject(image, forKey: urlString as NSString)
+            imageCache.setObject(image, forKey: urlString as NSString)
 
-            completionHandler(image)
+            DispatchQueue.main.async {
+                self.image = image
+            }
         }
     }
-
 }
