@@ -18,7 +18,7 @@ class SearchViewModel {
             searchUpdated(updatedCount)
         }
     }
-    private let searchService = SearchService()
+    let searchService = SearchService()
 
     func searchBooks(keyword: String) {
         if currentKeyword != keyword {
