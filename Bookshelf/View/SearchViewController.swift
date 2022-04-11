@@ -100,14 +100,21 @@ class SearchViewController: UIViewController {
         let book = self.searchViewModel.books[indexPath.row]
 
         cell.title.text = book.title
-        cell.img.loadImage(urlString: book.image)
 
-        if indexPath.row == (self.searchViewModel.books.count < 10 ? 0 : self.searchViewModel.books.count - 9) {
-            self.searchBooks()
+        ImageLoader.shared.loadImage(urlString: book.image) { image in
+            DispatchQueue.main.async {
+                cell.img.image = image
+            }
         }
 
         return cell
     }
+
+     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+         if indexPath.row == self.searchViewModel.books.count - 10 {
+             self.searchBooks()
+         }
+     }
 
      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
          self.showDetailView(book: self.searchViewModel.books[indexPath.row])

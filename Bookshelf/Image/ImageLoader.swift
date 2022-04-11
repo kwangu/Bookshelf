@@ -8,8 +8,10 @@
 import Foundation
 import UIKit
 
-class ImageLoader {
-    private let imageCache = NSCache<NSString, UIImage>()
+final class ImageLoader {
+    static let shared = ImageLoader()
+
+    private lazy var imageCache = NSCache<NSString, UIImage>()
 
     init() {
         imageCache.countLimit = 50

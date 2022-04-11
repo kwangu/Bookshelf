@@ -45,7 +45,11 @@ class DetailViewController: UIViewController {
         scrollView.anchor(top: view.topAnchor, right: view.trailingAnchor, bottom: view.bottomAnchor, left: view.leadingAnchor)
 
         let detailImage = UIImageView()
-        detailImage.loadImage(urlString: book?.image ?? "")
+        ImageLoader.shared.loadImage(urlString: book?.image ?? "") { image in
+            DispatchQueue.main.async {
+                detailImage.image = image
+            }
+        }
         scrollView.addSubview(detailImage)
 
         detailImage.anchor(top: scrollView.topAnchor, right: nil, bottom: nil, left: nil, centerX: scrollView.centerXAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
