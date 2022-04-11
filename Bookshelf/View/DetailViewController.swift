@@ -20,7 +20,7 @@ class DetailViewController: UIViewController {
 
         detailViewModel = DetailViewModel()
 
-        self.title = book?.title ?? ""
+        self.title = "Detail"
         self.navigationController?.navigationBar.barTintColor = .white
         self.view.backgroundColor = .white
 
