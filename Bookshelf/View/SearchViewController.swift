@@ -11,6 +11,7 @@ import UIKit
 class SearchViewController: UIViewController {
     private let searchBar = UITextField()
     private let tableView = UITableView()
+    private let emptyView = UILabel()
 
     private let searchViewModel = SearchViewModel()
 
@@ -53,11 +54,18 @@ class SearchViewController: UIViewController {
         tableView.register(BooksTableViewCell.self, forCellReuseIdentifier: "BooksTableViewCell")
         view.addSubview(tableView)
 
+        emptyView.text = "Not Result Founds"
+        emptyView.textAlignment = .center
+        view.addSubview(emptyView)
+
         searchBar.anchor(top: view.topAnchor, right: searchButton.leadingAnchor, bottom: nil, left: view.leadingAnchor, padding: .init(top: navBarHeight + 16, left: 16, bottom: 0, right: 6), size: .init(width: 0, height: 50))
 
         searchButton.anchor(top: searchBar.topAnchor, right: view.trailingAnchor, bottom: nil, left: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 16), size: .init(width: 70, height: 50))
 
-        tableView.anchor(top: searchBar.bottomAnchor, right: view.trailingAnchor, bottom: view.bottomAnchor, left: view.leadingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        tableView.anchor(top: searchBar.bottomAnchor, right: view.trailingAnchor, bottom: view.bottomAnchor, left: view.leadingAnchor)
+
+        emptyView.anchor(top: searchBar.bottomAnchor, right: view.trailingAnchor, bottom: view.bottomAnchor, left: view.leadingAnchor, centerX: view.centerXAnchor, centerY: view.centerYAnchor)
+        emptyView.isHidden = true
     }
 
     @objc private func searchBooks() {
@@ -66,7 +74,12 @@ class SearchViewController: UIViewController {
 
                 if count == 0 {
                     self.tableView.reloadData()
+                    self.emptyView.isHidden = false
                     return
+                }
+
+                if !self.emptyView.isHidden {
+                    self.emptyView.isHidden = true
                 }
 
                 var indexPaths = [IndexPath]()

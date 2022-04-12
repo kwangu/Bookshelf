@@ -10,10 +10,10 @@ import Foundation
 struct SearchModel: Codable {
     var error: String
     var total: String
-    var page: String
+    var page: String?
     var books: [BookModel]
 
-    init(error: String, total: String, page: String, books: [BookModel]) {
+    init(error: String, total: String, page: String? = nil, books: [BookModel]) {
         self.error = error
         self.total = total
         self.page = page
