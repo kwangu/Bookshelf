@@ -72,6 +72,10 @@ class SearchViewController: UIViewController {
         self.searchViewModel.searchUpdated = { count in
             DispatchQueue.main.async {
 
+                if count == -1 {
+                    self.tableView.reloadData()
+                    return
+                }
                 if count == 0 {
                     self.tableView.reloadData()
                     self.emptyView.isHidden = false
@@ -113,10 +117,13 @@ class SearchViewController: UIViewController {
         let book = self.searchViewModel.books[indexPath.row]
 
         cell.title.text = book.title
+        cell.url = book.image
 
         ImageLoader.shared.loadImage(urlString: book.image) { image in
             DispatchQueue.main.async {
-                cell.img.image = image
+                if cell.url == book.image {
+                    cell.img.image = image
+                }
             }
         }
 

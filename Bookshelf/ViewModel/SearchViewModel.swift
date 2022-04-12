@@ -10,12 +10,15 @@ import UIKit
 
 class SearchViewModel {
     private var currentKeyword: String = ""
-    var searchUpdated: (Int) -> Void = { _ in }
+    var searchUpdated: ((Int) -> Void)?
     private var updatedCount: Int = 0
 
     var books = [BookModel]() {
         didSet {
-            searchUpdated(updatedCount)
+            if searchUpdated == nil {
+                searchUpdated = { _ in }
+            }
+            searchUpdated?(updatedCount)
         }
     }
     let searchService = SearchService()
@@ -23,7 +26,7 @@ class SearchViewModel {
     func searchBooks(keyword: String) {
         if currentKeyword != keyword {
             currentKeyword = keyword
-            updatedCount = 0
+            updatedCount = -1
             self.books.removeAll()
         }
 

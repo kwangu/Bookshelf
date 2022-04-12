@@ -12,10 +12,12 @@ class BooksTableViewCell: UITableViewCell {
 
     var img = UIImageView()
     var title = UILabel()
+    var url = ""
 
     override func prepareForReuse() {
         self.title.text = ""
         self.img.image = nil
+        self.url = ""
     }
 
     private func setConstraint() {
