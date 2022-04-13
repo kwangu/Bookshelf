@@ -17,7 +17,6 @@ struct DownloadManager {
                 let fileManager = FileManager.default
                 let documentURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
                 let destinationURL = documentURL.appendingPathComponent(url.lastPathComponent)
-                print(destinationURL)
 
                 try? fileManager.removeItem(at: destinationURL)
 
