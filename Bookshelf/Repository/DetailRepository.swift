@@ -17,7 +17,9 @@ class DetailRepository {
         self.container = appDelegate?.persistentContainer
     }
 
-    func detailBookInfo(url: String, completionHandler: @escaping (DetailModel) -> Void) {
+    func detailBookInfo(isbn13: String, completionHandler: @escaping (DetailModel) -> Void) {
+        let url = "https://api.itbook.store/1.0/books/\(isbn13)"
+
         guard let url = URL(string: url) else {
             print("Error: cannot create URL")
             return

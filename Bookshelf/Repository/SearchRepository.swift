@@ -9,7 +9,24 @@ import Foundation
 
 class SearchRepository {
 
-    func searchBooks(url: String, completionHandler: @escaping (SearchModel) -> Void) {
+    private var currentPage = 0
+    private var totalPage: Int?
+
+    func searchBooks(isFirst: Bool, keyword: String, completionHandler: @escaping (SearchModel) -> Void) {
+
+        if isFirst {
+            currentPage = 0
+            totalPage = nil
+        }
+
+        self.currentPage += 1
+
+        let url = "https://api.itbook.store/1.0/search/\(keyword)/\(String(currentPage))"
+
+        if self.totalPage != nil && self.currentPage > self.totalPage ?? 0 {
+            return
+        }
+
         guard let url = URL(string: url) else {
             print("Error: cannot create URL")
             return
@@ -37,7 +54,13 @@ class SearchRepository {
                 return
             }
 
+            if self.totalPage == nil {
+                let total = Int(output.total) ?? 0
+                self.totalPage = total % 10 == 0 ? total / 10 : (total / 10)+1
+            }
+
             completionHandler(output)
+
         }.resume()
     }
 

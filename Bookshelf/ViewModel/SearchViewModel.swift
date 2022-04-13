@@ -30,7 +30,7 @@ class SearchViewModel {
             self.books.removeAll()
         }
 
-        self.searchService.searchBooks(isFirst: updatedCount == 0, keyword: keyword) { [weak self] books in
+        self.searchService.searchBooks(isFirst: updatedCount == -1, keyword: keyword) { [weak self] books in
             guard let self = self else { return }
             self.updatedCount = books.count
             self.books.append(contentsOf: books)

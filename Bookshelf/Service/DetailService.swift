@@ -12,8 +12,7 @@ class DetailService {
     private let detailRepository = DetailRepository()
 
     func detailBookInfo(isbn13: String, completionHandler: @escaping (DetailModel) -> Void) {
-        self.detailRepository.detailBookInfo(url: "https://api.itbook.store/1.0/books/\(isbn13)", completionHandler: { detailModel in
-
+        self.detailRepository.detailBookInfo(isbn13: isbn13, completionHandler: { detailModel in
             completionHandler(detailModel)
         })
     }
